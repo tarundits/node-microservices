@@ -1,12 +1,10 @@
-const express = require('express');
-const router = express.Router();
 const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 // Function to generate a JWT token
 function generateToken(user) {
-  return jwt.sign({ id: user._id, email: user.email }, 'lifeisshortliveitlarge', { expiresIn: '1h' });
+  return jwt.sign({ id: user._id, email: user.email }, process.env.SECRET_KEY, { expiresIn: '1h' });
 }
 
 // Endpoint for user registration
