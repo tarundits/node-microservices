@@ -48,7 +48,7 @@ const verify_token = async (req, res) => {
       return res.status(401).json({ error: 'Unauthorized: No token provided' });
     }
 
-    jwt.verify(token, 'lifeisshortliveitlarge', (err, decoded) => {
+    jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
       if (err) {
         return res.status(401).json({ error: 'Unauthorized: Invalid token' });
       }
