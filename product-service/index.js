@@ -1,19 +1,20 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const productController = require('./controllers/productController');
+const productRoutes = require('./routes/productRoutes');
 
 const app = express();
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://localhost:27017/productdb', {
+mongoose.connect(`${process.env.MONGODB_URL}`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
-app.use('/api', productController);
+app.use('/api', productRoutes);
 
-const PORT = 3002;
+const PORT = process.env.PORT;
 
 app.listen(PORT, () => {
   console.log(`Product Service running on port ${PORT}`);

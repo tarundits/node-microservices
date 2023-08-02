@@ -10,7 +10,7 @@ function generateToken(user) {
 }
 
 // Endpoint for user registration
-router.post('/register', async (req, res) => {
+const register = async (req, res) => {
   try {
     const { password, ...userData } = req.body; // Extract password from the request body
     const hashedPassword = await bcrypt.hash(password, 10); // Hash the password with salt rounds
@@ -22,10 +22,10 @@ router.post('/register', async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-});
+};
 
 // Endpoint for user login
-router.post('/login', async (req, res) => {
+const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
@@ -39,9 +39,9 @@ router.post('/login', async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-});
+};
 
-router.post('/verify_token', async (req, res) => {
+const verify_token = async (req, res) => {
   try {
     console.log(req.headers);
     const token = req.headers['authorization'].split('Bearer ')[1];
@@ -64,6 +64,10 @@ router.post('/verify_token', async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-})
+};
 
-module.exports = router;
+module.exports = {
+  register,
+  login,
+  verify_token
+};
